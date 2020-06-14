@@ -1,6 +1,9 @@
 /*
- * This class is a wrapper for the adafruit PWM servo driver library. It also extends the functionality to include quintic polynomial planning.
- * Its primary usage will be inside the LeArm class.
+ * This class is a wrapper for the adafruit PWM servo driver library.
+ * Joint's primary usage will be inside the LeArm class.
+ * 
+ * Author: Garrison Johnston -- 06/13/2020
+ * Project: LeArm_ros_controller
  */
 
 
@@ -30,14 +33,11 @@ public:
 	 */
 	~Joint() = default;
 
-
 	/*
-	 * @brief Commands the joint to move to a desired angle using a quintic polynomial
-	 * @param angle Desired joint angle
-	 * @param time_final Duration of the movement in seconds
-	 * @param dt step size in seconds.  
+	 * @brief Commands the joint to move to a desired angle
+	 * @param angle Desired joint angle.  
 	 */
-	void setAngle(double angle, double time_final, double dt);
+	void setAngle(double angle);
 
 	/* 
 	 * @brief Returns the current angle of the servo in whatever units angle_min and angle_max are in.

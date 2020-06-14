@@ -1,22 +1,19 @@
 #include <Adafruit_PWMServoDriver.h>
-#include <Joint.h>
+#include <LeArm.h>
 #include <Wire.h>
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
-Joint gripper = Joint(0, 100, 1500, 2500, 0, 5, &pwm);
+LeArm robot = LeArm();
+double desired_angles1[6] = {0, 45, 45, 45, 90, 50};
+double desired_angles2[6] = {0, 135, 90, 90, 90, 0}; 
+
 void setup(){
-  pwm.begin();
-  Serial.begin(9600);
-  pwm.setOscillatorFrequency(27000000);
-  pwm.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
-  delay(10);
-  gripper.goHome();
-  delay(1000);
-  }
+  robot.start();
+}
 
 void loop(){
-  gripper.setAngle(10, 0.5, 0.01);
+  robot.goToPose(desired_angles1, 2, 0.01);
   delay(1000);
-  gripper.setAngle(90, 0.5, 0.01);
+  robot.goToPose(desired_angles2, 2, 0.01);
   delay(1000);
+  //robot.goHome();
   }
