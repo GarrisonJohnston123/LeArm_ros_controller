@@ -16,7 +16,9 @@ Joint::Joint(double ang_min, double ang_max, double pul_min, double pul_max, dou
 	, angle_home(home)
 	, servo_num(ser_num)
 	, pwm(pwm_obj)
-	{}
+	{
+		angle_current = angle_home; // we cant sense the angle, so we have to assume it has been homed.
+	}
 
 void Joint::setAngle(double angle){
 	

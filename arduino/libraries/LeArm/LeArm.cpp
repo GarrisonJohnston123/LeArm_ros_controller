@@ -27,10 +27,13 @@ void LeArm::goToPose(double *angles, double time_final, double dt){
 		// increment time
 		time += dt;
 	}
+
+	delete [] q_0; // needed to prevent memory leak. See getPose()
 	
 }
 
 void LeArm::start(){
+
 	// start pwm 
 	pwm.begin();
 	pwm.setOscillatorFrequency(27000000);
@@ -39,15 +42,19 @@ void LeArm::start(){
 	// wait 10 ms
 	delay(10);
 
+	// send robot to home configuration
 	goHome();
 
+	// wait for a seconds
 	delay(1000);
 }
 
 double* LeArm::getPose(){
 	
+	//dynamically allocated array. Remember to delete!
 	double *pose = new double[6];
 
+	// loop through the joints and get their current value 
 	for (uint32_t i = 0; i < 6; ++i){
 		pose[i] = joints[i].getAngle();
 	}
@@ -56,6 +63,8 @@ double* LeArm::getPose(){
 }
 
 void LeArm::goHome(){
+
+	// loop though joints and send them home
 	for (Joint q : joints){
 		q.goHome();
 	}
